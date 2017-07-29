@@ -30,6 +30,9 @@
 - (NSString *)czpickerView:(CZPickerView *)pickerView
                             titleForRow:(NSInteger)row;
 
+/* picker item image for each row */
+- (UIImage *)czpickerView:(CZPickerView *)pickerView imageForRow:(NSInteger)row;
+
 @end
 
 @protocol CZPickerViewDelegate <NSObject>
@@ -50,6 +53,19 @@
 
 /** delegate method for canceling */
 - (void)czpickerViewDidClickCancelButton:(CZPickerView *)pickerView;
+
+/* picker will show */
+- (void)czpickerViewWillDisplay:(CZPickerView *)pickerView;
+
+/* picker did show */
+- (void)czpickerViewDidDisplay:(CZPickerView *)pickerView;
+
+/* picker will dismiss */
+- (void)czpickerViewWillDismiss:(CZPickerView *)pickerView;
+
+/* picker did dismiss */
+- (void)czpickerViewDidDismiss:(CZPickerView *)pickerView;
+
 @end
 
 @interface CZPickerView : UIView<UITableViewDataSource, UITableViewDelegate>
@@ -65,12 +81,19 @@
 
 /** show the picker */
 - (void)show;
+- (void)showInContainer:(id)container;
+
+/** reload the picker */
+- (void)reloadData;
 
 /** return previously selected row, in array of NSNumber form. */
 - (NSArray *)selectedRows;
 
 /** set pre-selected rows, rows should be array of NSNumber. */
 - (void)setSelectedRows: (NSArray *)rows;
+
+/** unselect all rows */
+- (void)unselectAll;
 
 @property id<CZPickerViewDelegate> delegate;
 
@@ -88,6 +111,9 @@
 
 /** picker header background color */
 @property (nonatomic, strong) UIColor *headerBackgroundColor;
+
+/** picker header title font */
+@property (nonatomic, strong) UIFont *headerTitleFont;
 
 /** picker header title color */
 @property (nonatomic, strong) UIColor *headerTitleColor;
@@ -110,7 +136,13 @@
 /** picker confirm button highlighted state color */
 @property (nonatomic, strong) UIColor *confirmButtonHighlightedColor;
 
-/** picker's animation duration for showing and dismissing*/
+/** tint color for tableview, also checkmark color */
+@property (nonatomic, strong) UIColor *checkmarkColor;
+
+/** picker's animation duration for showing and dismissing */
 @property CGFloat animationDuration;
+
+/** width of picker */
+@property CGFloat pickerWidth;
 
 @end
